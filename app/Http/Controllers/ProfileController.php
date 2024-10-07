@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
@@ -57,4 +59,33 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    
+     /**
+     * Follow a user
+     */
+    public function follow(Request $request,User $user): RedirectResponse
+    {
+       $request->user()->followings()->attach($user);
+
+        return Redirect::back();
+    }
+
+     /**
+     * Unfollow a user
+     */
+
+    public function unfollow(Request $request,User $user): RedirectResponse
+    {
+       $request->user()->followings()->detach($user);
+
+        return Redirect::back();
+    }
+
+
+
+
 }
+
+
+
