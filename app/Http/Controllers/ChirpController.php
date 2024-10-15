@@ -37,9 +37,22 @@ class ChirpController extends Controller
     {
         $validated = $request->validate([
             'message' => 'required|string|max:255',
+            'image'   => 'requires|image|mimes:jpeg,png,gif,svg|max:2048',  
         ]);
+
+        $imageName = time(  ).'.'.$request->image->extension();
+
+        $request->image->move(public_path('images'),$imageName);
+
+        $chirp = new Chirp();
+        $chirp->message = $request->message;
+        $chirp->image = 'images/'.$imageName;
+        $chirp->user_id = auth()->id();
+        $chirp->save();
+    
+
  
-        $request->user()->chirps()->create($validated);
+        // $request->user()->chirps()->create($validated);
  
         return redirect(route('chirps.index'));
     }
@@ -79,6 +92,19 @@ class ChirpController extends Controller
  
         return redirect(route('chirps.index'));
     }
+
+
+    // display a listening resource 
+    public function followings(Request $request):View
+    {
+        return view('followings.index' ,[
+            'followings' => $request->user()->followings
+        ]);
+    }
+
+
+
+
  
     /**
      * Remove the specified resource from storage.

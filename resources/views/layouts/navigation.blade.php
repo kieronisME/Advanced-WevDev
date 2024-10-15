@@ -18,6 +18,10 @@
     <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
         {{ __('Chirps') }}
     </x-nav-link>
+    <x-nav-link :href="route('following.index')" :active="request()->routeIs('following.index')">
+        {{ __('Following') }}
+    </x-nav-link>
+    <!-- if there is a problem its probaly here -->
 </div>
 
             <!-- Settings Dropdown -->

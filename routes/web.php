@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/follow/{user}', [ProfileController::class, 'follow'])->name('profile.follow');
     Route::delete('/profile/unfollow/{user}', [ProfileController::class, 'unfollow'])->name('profile.unfollow');
 
+    Route::get('/followings', [ProfileController::class, 'followings'])->name('followings.index');
+
 });
  
 Route::resource('chirps', ChirpController::class)
